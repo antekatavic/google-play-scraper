@@ -14,6 +14,19 @@ class Format(ABC):
 
 
 class Formats:
+    class _DataSafety(Format):
+        URL_FORMAT = (
+            "{}/store/apps/datasafety?id={{app_id}}&hl={{lang}}&gl={{country}}".format(
+                PLAY_STORE_BASE_URL
+            )
+        )
+
+        def build(self, app_id: str, lang: str, country: str) -> str:
+            return self.URL_FORMAT.format(app_id=app_id, lang=lang, country=country)
+        
+        def build_body(self, *args):
+            return None
+                
     class _Detail(Format):
         URL_FORMAT = (
             "{}/store/apps/details?id={{app_id}}&hl={{lang}}&gl={{country}}".format(
@@ -110,6 +123,7 @@ class Formats:
         def build_body(self, *args):
             return None
 
+    DataSafety = _DataSafety()
     Detail = _Detail()
     Reviews = _Reviews()
     Permissions = _Permissions()

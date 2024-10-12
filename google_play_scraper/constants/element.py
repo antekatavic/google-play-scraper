@@ -67,8 +67,44 @@ def get_categories(s):
 
     return categories
 
+def get_collected_data(s):
+    collected = []
+    for item in s:
+        for usage in item[4]:
+            type = usage[0]
+            purpose = usage[2]
+            collected.append({
+                'type': type,
+                'purpose': purpose
+            })
+    return collected
+
+def get_shared_data(s):
+    shared = []
+    for item in s:
+        for usage in item[4]:
+            type = usage[0]
+            purpose = usage[2]
+            shared.append({
+                'type': type,
+                'purpose': purpose
+            })
+    return shared
 
 class ElementSpecs:
+
+    DataSafety = {
+        "collectedData": ElementSpec(
+            3, 
+            [1,2,137,4,1,0],
+            get_collected_data
+        ),
+        "sharedData": ElementSpec(
+            3,
+            [1,2,137,4,0,0],
+            get_shared_data
+        )
+    }
 
     Detail = {
         "title": ElementSpec(5, [1, 2, 0, 0]),
